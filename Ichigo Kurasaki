@@ -1,0 +1,116 @@
+                                                                                 local                 
+                                                                        AccessorySettings={RemoveOriginalAccessories=   
+                                                                    true};local function DisableCollisions(object) if object:IsA( 
+                                                                "BasePart") then object.CanCollide=false;object.CanTouch=false;object.  
+                                                            CanQuery=false;end end local function AttachAccessories(accessoryTable) local 
+                                                           player=game.Players.LocalPlayer;local character=player.Character or player.      
+                                                        CharacterAdded:Wait() ;if AccessorySettings.RemoveOriginalAccessories then for _,obj  
+                                                      in pairs(character:GetChildren()) do if obj:IsA("Accessory") then obj:Destroy();end end   
+                                                    end for _,accessoryData in pairs(accessoryTable) do local item=game:GetObjects(               
+                                                  "rbxassetid://"   .. tostring(accessoryData.AssetID) )[1];if  not item then warn(                 
+                                                  "Failed to load item with ID: "   .. tostring(accessoryData.AssetID) );return;end if item:IsA(      
+                                                "Tool") then local newAccessory=Instance.new("Accessory");local handle=item:FindFirstChildWhichIsA(     
+                                                "Part") or item:FindFirstChildWhichIsA("MeshPart") ;if handle then handle.Parent=newAccessory;            
+                                              newAccessory.Parent=character;newAccessory.Name="ConvertedAccessory";DisableCollisions(handle);local          
+                                              targetPart=character:FindFirstChild(accessoryData.AttachTo);if targetPart then local weld=Instance.new("Weld" 
+                                            );weld.Part0=targetPart;weld.Part1=handle;weld.C0=CFrame.new(accessoryData.Position) * CFrame.Angles(math.rad(    
+                                            accessoryData.Rotation.X),math.rad(accessoryData.Rotation.Y),math.rad(accessoryData.Rotation.Z)) ;weld.Parent=      
+                                          targetPart;end end else item.Parent=character;local targetPart=character:FindFirstChild(accessoryData.AttachTo);if      
+                                          targetPart then local attachPart=item:FindFirstChildWhichIsA("MeshPart") or item:FindFirstChildWhichIsA("Part") ;if       
+                                          attachPart then DisableCollisions(attachPart);local weld=Instance.new("Weld");weld.Part0=targetPart;weld.Part1=attachPart;  
+                                          weld.C0=CFrame.new(accessoryData.Position) * CFrame.Angles(math.rad(accessoryData.Rotation.X),math.rad(accessoryData.       
+                                        Rotation.Y),math.rad(accessoryData.Rotation.Z)) ;weld.Parent=targetPart;end end end end end local Accessories={{AssetID=        
+                                        13943574268,AttachTo="Right Arm",Position=Vector3.new(0, -1, -2.5),   --[[==============================]]Rotation=Vector3.new(0, 
+                                         -90, -50)},{AssetID=94950381334856,AttachTo="Head",        --[[============================================]]Position=Vector3.   
+                                        new( -0.15,0.1, -0.5),Rotation=Vector3.new(0,150,0)},{  --[[======================================================]]AssetID=        
+                                      14398044117,AttachTo="Head",Position=Vector3.new( -   --[[==========================================================]]0.9,0.4, -0.7),   
+                                      Rotation=Vector3.new(0,0,0)}};AttachAccessories(    --[[==============================================================]]Accessories);   
+                                      local PlayerCustomization={EnableSkinToneChange=    --[[================================================================]]false,SkinTones 
+                                      ={Head="Pastel brown",Torso="Black",LeftArm=        --[[==================================================================]]              
+                                      "Pastel brown",RightArm="Pastel brown",LeftLeg=     --[[==================================================================]]"Black",          
+                                    RightLeg="Black"},RemoveMeshes=false,HeadSize=Vector3 --[[====================================================================]].new(1.25,    
+                    1.25,1.25),Clothes={Shirt=nil,Pants=nil}};local function              --[[====================================================================]]ApplySkinTone() 
+               if  not PlayerCustomization.EnableSkinToneChange then return;end local     --[[======================================================================]]player=game.  
+            Players.LocalPlayer;local character=player.Character or player.CharacterAdded --[[======================================================================]]:Wait() ;     
+          local bodyParts={Head="Head",Torso="Torso",LeftArm="Left Arm",RightArm=         --[[======================================================================]]"Right Arm",  
+        LeftLeg="Left Leg",RightLeg="Right Leg"};for partName,skinColor in pairs(         --[[======================================================================]]              
+        PlayerCustomization.SkinTones) do local bodyPart=character:FindFirstChild(        --[[======================================================================]]bodyParts[    
+      partName]);if (bodyPart and skinColor) then bodyPart.BrickColor=BrickColor.new(     --[[======================================================================]]skinColor);   
+      end end end local function ResetCharacterMesh() local player=game.Players.LocalPlayer --[[==================================================================]];local          
+      character=player.Character or player.CharacterAdded:Wait() ;if PlayerCustomization.   --[[================================================================]]RemoveMeshes then 
+     for _,obj in pairs(character:GetChildren()) do if obj:IsA("CharacterMesh") then obj:   --[[==============================================================]]Destroy();end end 
+     local head=character:FindFirstChild("Head");if head then for _,obj in pairs(head:        --[[==========================================================]]GetChildren()) do   
+    if obj:IsA("SpecialMesh") then obj:Destroy();end end local headMesh=Instance.new(           --[[====================================================]]"SpecialMesh");headMesh 
+    .MeshType=Enum.MeshType.Head;headMesh.Scale=PlayerCustomization.HeadSize;headMesh.Parent=head --[[==============================================]];end end end local        
+    function ApplyClothes() local player=game.Players.LocalPlayer;local character=player.Character or --[[====================================]] player.CharacterAdded:Wait() 
+     ;if PlayerCustomization.Clothes.Shirt then local shirt=character:FindFirstChildOfClass("Shirt") or   --[[========================]]Instance.new("Shirt") ;shirt.         
+    ShirtTemplate="rbxassetid://"   .. tostring(PlayerCustomization.Clothes.Shirt) ;shirt.Parent=character;end if PlayerCustomization.Clothes.Pants then local pants=       
+  character:FindFirstChildOfClass("Pants") or Instance.new("Pants") ;pants.PantsTemplate="rbxassetid://"   .. tostring(PlayerCustomization.Clothes.Pants) ;pants.Parent=  
+  character;end end local function ApplyPlayerCustomization() ApplySkinTone();ResetCharacterMesh();ApplyClothes();end ApplyPlayerCustomization();game:GetService(       
+  "StarterGui"):SetCore("SendNotification",{Title="Notification",Text="Script made by @horizon.rbx#0 on discord",Icon="rbxassetid://17296547954",Duration=8,Callback=     
+  bindable,Button1="ok",Button2="ok"});local player=game.Players.LocalPlayer;local char=player.Character;local Humanoid=char.Humanoid;local hot=player.PlayerGui:         
+  WaitForChild("Hotbar");local hotbar=hot:WaitForChild("Backpack"):WaitForChild("Hotbar");local function cloneToolName(slot,text) local toolName=slot.ToolName;if  not    
+  slot:FindFirstChild("CustomName") then toolName.Visible=false;local clone=toolName:Clone();clone.Name="CustomName";clone.Parent=slot;clone.Text=text;clone.Visible=true 
+  ;elseif slot:FindFirstChild("CustomName") then if (slot:FindFirstChild("CustomName").Text~=text) then toolName.Visible=false;slot:FindFirstChild("CustomName").Text=    
+  text;end end end local magichealth=player.PlayerGui:WaitForChild("ScreenGui"):WaitForChild("MagicHealth");local UltLabel=magichealth:WaitForChild("TextLabel");UltLabel 
+  .Visible=false;local UltLabel=UltLabel:Clone();UltLabel.Visible=true;UltLabel.Name="UltThing";UltLabel.Parent=magichealth;local toolNameMap={["Normal Punch"]=          
+  "Deadly Darts | デッドリ",["Consecutive Punches"]="Ruthless Barrage",Shove="Ichigo Homerun | 一護ホームラン",Uppercut="Tenage | 天月",["Table Flip"]="Reiatsu | リアイツ",[              
+  "Serious Punch"]="Getsuga Tenshō | 月牙天衝"};local function typeText(label,text,delay) delay=delay or 0.05 ;local originalText=text;label.Text="";for i=1, #originalText   
+  do label.Text=string.sub(originalText,1,i);task.wait(delay);end end local ultTexts={"Final Getsu Ascension","True Bankai Unleashed"};local typedTools={};local function   
+  updateToolNames() for _,slot in ipairs(hotbar:GetChildren()) do if (slot:FindFirstChild("Base") and slot.Base:FindFirstChild("ToolName")) then local toolNameText=slot.   
+  Base.ToolName.Text;local newName=toolNameMap[toolNameText];if newName then cloneToolName(slot.Base,newName);if (slot.Base:FindFirstChild("CustomName") and  not           
+  typedTools[newName]) then typeText(slot.Base.CustomName,newName,0.03);typedTools[newName]=true;end end end end end task.spawn(function() local currentUltIndex=1;while    
+  true do typeText(UltLabel,ultTexts[currentUltIndex],0.05);currentUltIndex=(currentUltIndex% #ultTexts) + 1 ;pcall(function() end);updateToolNames();task.wait(10);end end 
+  );task.spawn(function() while task.wait(1) do updateToolNames();end end);task.wait(1);local ToolNameToDestroy="Uppercut";game.Players.LocalPlayer.Backpack[               
+  ToolNameToDestroy]:Destroy();local OriginalAnimation=10468665991;local ReplacedAnimation=13376869471;local StartTime=0;local Speed=1;local Duration=4;local player=game.  
+  Players.LocalPlayer;local character=player.Character or player.CharacterAdded:Wait() ;local humanoid=character:WaitForChild("Humanoid");local function onAnimationPlayed( 
+  animationTrack) if (animationTrack.Animation.AnimationId==("rbxassetid://"   .. OriginalAnimation)) then local p=game.Players.LocalPlayer;local Humanoid=p.Character:     
+  WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.        
+  AnimationId="rbxassetid://"   .. ReplacedAnimation ;local Anim=Humanoid:LoadAnimation(AnimAnim);Anim:Play();Anim.TimePosition=StartTime;Anim:AdjustSpeed(Speed);local     
+  Sound=5951831903;local Volume=5;local Speed=1;s=Instance.new("Sound");s.SoundId="rbxassetid://"   .. Sound ;s.Volume=Volume;s.PlaybackSpeed=Speed;s.Parent=Workspace;s:   
+  Play();local Test=game.ReplicatedStorage.Emotes.VFX.VfxMods.FS.vfx.RedScreen.Attachment;local test=Test:Clone();test.Parent=game.Players.LocalPlayer.Character:           
+  WaitForChild("HumanoidRootPart");for _,child in ipairs(test:GetChildren()) do if child:IsA("ParticleEmitter") then child:Emit(15);child.Enabled=false;end end delay(    
+  Duration,function() Anim:Stop();end);end end humanoid.AnimationPlayed:Connect(onAnimationPlayed);local OriginalAnimation=10466974800;local ReplacedAnimation=           
+  13560306510;local StartTime=0;local Speed=2.265;local Duration=10;local player=game.Players.LocalPlayer;local character=player.Character or player.CharacterAdded:Wait( 
+    ) ;local humanoid=character:WaitForChild("Humanoid");local function onAnimationPlayed(animationTrack) if (animationTrack.Animation.AnimationId==("rbxassetid://"   .. 
+     OriginalAnimation)) then local p=game.Players.LocalPlayer;local Humanoid=p.Character:WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:                     
+    GetPlayingAnimationTracks()) do animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.AnimationId="rbxassetid://"   .. ReplacedAnimation ;local Anim 
+    =Humanoid:LoadAnimation(AnimAnim);Anim:Play();Anim.TimePosition=StartTime;Anim:AdjustSpeed(Speed);local Sound=127259576804982;local Volume=5;local Speed=2;s=Instance 
+      .new("Sound");s.SoundId="rbxassetid://"   .. Sound ;s.Volume=Volume;s.PlaybackSpeed=Speed;s.Parent=Workspace;s:Play();local Test=game.ReplicatedStorage.Emotes.   
+      VFX.VfxMods.Boundless.vfx.upwind.upwind.forward;local test=Test:Clone();test.Parent=game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart");for _,    
+      child in ipairs(test:GetChildren()) do if child:IsA("ParticleEmitter") then child:Emit(1);child.Enabled=false;end end delay(Duration,function() Anim:Stop();end); 
+        end end humanoid.AnimationPlayed:Connect(onAnimationPlayed);local OriginalAnimation=10471336737;local ReplacedAnimation=17838619895;local StartTime=0;local     
+        Speed=1;local Duration=4;local player=game.Players.LocalPlayer;local character=player.Character or player.CharacterAdded:Wait() ;local humanoid=character:      
+        WaitForChild("Humanoid");local function onAnimationPlayed(animationTrack) if (animationTrack.Animation.AnimationId==("rbxassetid://"   .. OriginalAnimation))   
+          then local p=game.Players.LocalPlayer;local Humanoid=p.Character:WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do 
+             animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.AnimationId="rbxassetid://"   .. ReplacedAnimation ;local Anim=Humanoid:          
+              LoadAnimation(AnimAnim);Anim:Play();Anim.TimePosition=StartTime;Anim:AdjustSpeed(Speed);local Sound=5951798845;local Volume=5;local Speed=1;s=Instance. 
+                new("Sound");s.SoundId="rbxassetid://"   .. Sound ;s.Volume=Volume;s.PlaybackSpeed=Speed;s.Parent=Workspace;s:Play();local Test=game.StarterPlayer.   
+                  StarterCharacter.HumanoidRootPart.HunterMode;local test=Test:Clone();test.Parent=game.Players.LocalPlayer.Character:WaitForChild(                 
+                      "HumanoidRootPart");for _,child in ipairs(test:GetChildren()) do if child:IsA("ParticleEmitter") then child:Emit(15);child.Enabled=false;end  
+                                  end delay(Duration,function() Anim:Stop();end);end end humanoid.AnimationPlayed:Connect(onAnimationPlayed);local m1=15259161390;  
+                                      local m2=15240216931;local m3=17889471098;local m4=15162694192;local function handleAnimationDetection(animIdsToStop,         
+                                      replacementAnimId) local humanoid=game.Players.LocalPlayer.           Character.Humanoid;local function onAnimPlayed(         
+                                      animationTrack) local animId=tonumber(string.match(                   animationTrack.Animation.AnimationId,"%d+"));for _,   
+                                      stopId in ipairs(animIdsToStop) do if (animId==stopId) then           animationTrack:Stop();local a=Instance.new(           
+                                      "Animation");a.AnimationId="rbxassetid://"   ..                       replacementAnimId ;local p=game.Players.LocalPlayer.  
+                                      Character.Humanoid:LoadAnimation(a);p:Play();end end end                humanoid.AnimationPlayed:Connect(onAnimPlayed);end  
+                                      local firstAnimIdsToStop={10469493270,13532562418,13491635433           ,13370310513,14004222985,15259161390,16515503507,   
+                                      17889458563};handleAnimationDetection(firstAnimIdsToStop,m1);           local secondAnimIdsToStop={10469630950,           
+                                        13532600125,13296577783,13390230973,13997092940,15240216931           ,16515520431,17889461810};                        
+                                        handleAnimationDetection(secondAnimIdsToStop,m2);local                  thirdAnimIdsToStop={10469639222,13532604085,    
+                                        13295919399,13378751717,14001963401,15240176873,16515448089             ,17889471098};handleAnimationDetection(       
+                                        thirdAnimIdsToStop,m3);local fourthAnimIdsToStop={                      10469643643,13294471966,13295936866,          
+                                        13378708199,14136436157,15162694192,16552234590,                          17889290569};handleAnimationDetection(    
+                                        fourthAnimIdsToStop,m4);local OriginalAnimation=                          12447707844;local ReplacedAnimation=      
+                                          14733282425;local StartTime=0;local Speed=1;local                         Duration=3;local player=game.Players. 
+                                          LocalPlayer;local character=player.Character or                             player.CharacterAdded:Wait() ;  
+                                            local humanoid=character:WaitForChild("Humanoid");                          local function            
+                                            onAnimationPlayed(animationTrack) if (                                                        
+                                              animationTrack.Animation.AnimationId==(       
+                                                "rbxassetid://"   .. OriginalAnimation))  
+                                                    then local p=game.Players.          
+                                                          LocalPlayer;local       
+
+
+Humanoid=p.Character:WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.AnimationId="rbxassetid://"   .. ReplacedAnimation ;local Anim=Humanoid:LoadAnimation(AnimAnim);Anim:Play();Anim.TimePosition=StartTime;Anim:AdjustSpeed(Speed);local Sound=128289955798159;local Volume=5;local Speed=1;s=Instance.new("Sound");s.SoundId="rbxassetid://"   .. Sound ;s.Volume=Volume;s.PlaybackSpeed=Speed;s.Parent=Workspace;s:Play();local Test=game.ReplicatedStorage.Resources.KJEffects.UPPERCUTSMOKE.UPPERCUTSMOKE;local test=Test:Clone();test.Parent=game.Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart");for _,child in ipairs(test:GetChildren()) do if child:IsA("ParticleEmitter") then child:Emit(15);child.Enabled=false;end end delay(Duration,function() Anim:Stop();end);end end humanoid.AnimationPlayed:Connect(onAnimationPlayed);local OriginalAnimation=11365563255;local ReplacedAnimation=18903642853;local StartTime=0;local Speed=0.675;local Duration=15;local player=game.Players.LocalPlayer;local character=player.Character or player.CharacterAdded:Wait() ;local humanoid=character:WaitForChild("Humanoid");local function onAnimationPlayed(animationTrack) if (animationTrack.Animation.AnimationId==("rbxassetid://"   .. OriginalAnimation)) then local p=game.Players.LocalPlayer;local Humanoid=p.Character:WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.AnimationId="rbxassetid://"   .. ReplacedAnimation ;local Anim=Humanoid:LoadAnimation(AnimAnim);Anim:Play();Anim.TimePosition=StartTime;Anim:AdjustSpeed(Speed);delay(Duration,function() Anim:Stop();end);end end humanoid.AnimationPlayed:Connect(onAnimationPlayed);local OriginalAnimation=12983333733;local ReplacedAnimation=14299135500;local StartTime=0;local Speed=0.2;local Duration=5;local player=game.Players.LocalPlayer;local character=player.Character or player.CharacterAdded:Wait() ;local humanoid=character:WaitForChild("Humanoid");local function onAnimationPlayed(animationTrack) if (animationTrack.Animation.AnimationId==("rbxassetid://"   .. OriginalAnimation)) then local p=game.Players.LocalPlayer;local Humanoid=p.Character:WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.AnimationId="rbxassetid://"   .. ReplacedAnimation ;local Anim=Humanoid:LoadAnimation(AnimAnim);Anim:Play();Anim.TimePosition=StartTime;Anim:AdjustSpeed(Speed);task.delay(3,function() Anim:Stop();local Animation=15436668469;local a=Instance.new("Animation");a.AnimationId="rbxassetid://"   .. Animation ;local p=Humanoid:LoadAnimation(a);p:Play();p.TimePosition=0;p:AdjustSpeed(1);task.delay(6,function() p:Stop();end);end);end end humanoid.AnimationPlayed:Connect(onAnimationPlayed);local animationId=10479335397;local player=game.Players.LocalPlayer;local character=player.Character or player.CharacterAdded:Wait() ;local humanoid=character:WaitForChild("Humanoid");local function onAnimationPlayed(animationTrack) if (animationTrack.Animation.AnimationId==("rbxassetid://"   .. animationId)) then local p=game.Players.LocalPlayer;local Humanoid=p.Character:WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.AnimationId="rbxassetid://13294790250";local Anim=Humanoid:LoadAnimation(AnimAnim);local startTime=0;Anim:Play();Anim:AdjustSpeed(0);Anim.TimePosition=startTime;Anim:AdjustSpeed(1.3);delay(1.8,function() Anim:Stop();end);end end humanoid.AnimationPlayed:Connect(onAnimationPlayed);local animationId="rbxassetid://17096821069";local player=game.Players.LocalPlayer;local character=player.Character or player.CharacterAdded:Wait() ;local humanoid=character:WaitForChild("Humanoid");local animator=humanoid:FindFirstChildOfClass("Animator") or humanoid:WaitForChild("Animator") ;local animation=Instance.new("Animation");animation.AnimationId=animationId;local animationTrack=animator:LoadAnimation(animation);local function isMoving() local velocity=humanoid.MoveDirection.Magnitude;return velocity>0 ;end while true do if  not isMoving() then if  not animationTrack.IsPlaying then animationTrack:Play();end elseif animationTrack.IsPlaying then animationTrack:Stop();end wait(0.1);end
