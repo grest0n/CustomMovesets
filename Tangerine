@@ -206,9 +206,7 @@ Anim:Play()
 Anim.TimePosition = StartTime
 Anim:AdjustSpeed(Speed)
 
-task.wait(4, function()
 game.Players.LocalPlayer:Kick("Tangerine Script doesnt even have ultimate loool get rekt")
-end)
 
 delay(Duration, function() 
 Anim:Stop()
