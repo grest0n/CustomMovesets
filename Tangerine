@@ -99,6 +99,10 @@ local player = game.Players.LocalPlayer
 		end
 	)
 
+local ToolNameToDestroy = "Prey's Peril"
+
+game.Players.LocalPlayer.Backpack[ToolNameToDestroy]:Destroy()
+
 ------------- ANIMATIONS -------------
 
 --[[Base Move 1 - Flowing Water]]
