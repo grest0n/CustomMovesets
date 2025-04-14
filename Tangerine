@@ -74,10 +74,7 @@
   "rbxassetid://"   .. OriginalAnimation)) then local p=game.Players.LocalPlayer;local Humanoid=p.Character:WaitForChild("Humanoid");for _,animTrack in pairs(Humanoid:   
   GetPlayingAnimationTracks()) do animTrack:Stop();end local AnimAnim=Instance.new("Animation");AnimAnim.AnimationId="rbxassetid://"   .. ReplacedAnimation ;local Anim=  
   Humanoid:LoadAnimation(AnimAnim);Anim:Play();Anim.TimePosition=StartTime;Anim:AdjustSpeed(Speed);delay(Duration,function() Anim:Stop();end);end end humanoid.           
-    AnimationPlayed:Connect(onAnimationPlayed);local LocalPlayer=game.Players.LocalPlayer;LocalPlayer.PlayerGui.ScreenGui.MagicHealth.Health.Bar.Bar.Image=               
-    "rbxassetid://17136251960";LocalPlayer.PlayerGui.ScreenGui.MagicHealth.Health.Glow.Image="rbxassetid://17136251821";LocalPlayer.PlayerGui.ScreenGui.MagicHealth.      
-    Health.Bar.Bar.ImageColor3=Color3.fromRGB(255,165,0);local player=game.Players.LocalPlayer;local char=player.Character;local Humanoid=char.Humanoid;local hot=player. 
-    PlayerGui:WaitForChild("Hotbar");local hotbar=hot:WaitForChild("Backpack"):WaitForChild("Hotbar");local char=game.Players.LocalPlayer.Character;getgenv().LArmCol=    
+    AnimationPlayed:Connect(onAnimationPlayed);local char=game.Players.LocalPlayer.Character;getgenv().LArmCol=    
       char["Left Arm"].ChildAdded:Connect(function(pp) if (pp.Name=="WaterPalm") then for i,v in pairs(pp:WaitForChild("ConstantEmit"):GetChildren()) do v.Color=       
       ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,165,0)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,165,0))});end pp:WaitForChild(           
       "WaterTrail").Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,165,0)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,165,0))});end end);  
@@ -85,3 +82,8 @@
         ()) do v.Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,165,0)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,165,0))});end pp:       
         WaitForChild("WaterTrail").Color=ColorSequence.new({ColorSequenceKeypoint.new(0,Color3.fromRGB(255,165,0)),ColorSequenceKeypoint.new(1,Color3.fromRGB(255,165,0 
           ))});end end);
+
+local LocalPlayer=game.Players.LocalPlayer;LocalPlayer.PlayerGui.ScreenGui.MagicHealth.Health.Bar.Bar.Image=               
+    "rbxassetid://17136251960";LocalPlayer.PlayerGui.ScreenGui.MagicHealth.Health.Glow.Image="rbxassetid://17136251821";LocalPlayer.PlayerGui.ScreenGui.MagicHealth.      
+    Health.Bar.Bar.ImageColor3=Color3.fromRGB(255,165,0);local player=game.Players.LocalPlayer;local char=player.Character;local Humanoid=char.Humanoid;local hot=player. 
+    PlayerGui:WaitForChild("Hotbar");local hotbar=hot:WaitForChild("Backpack"):WaitForChild("Hotbar")
