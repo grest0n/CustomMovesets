@@ -1,0 +1,215 @@
+-- April fools moveset, special made for justeclipse_.
+
+local player = game.Players.LocalPlayer
+	local char = player.Character
+	local Humanoid = char.Humanoid
+	local hot = player.PlayerGui:WaitForChild("Hotbar")
+	local hotbar = hot:WaitForChild("Backpack"):WaitForChild("Hotbar")
+
+	local function cloneToolName(slot, text)
+		local toolName = slot.ToolName
+		if not slot:FindFirstChild("CustomName") then
+			toolName.Visible = false
+			local clone = toolName:Clone()
+			clone.Name = "CustomName"
+			clone.Parent = slot
+			clone.Text = text
+			clone.Visible = true
+		elseif slot:FindFirstChild("CustomName") then
+			if slot:FindFirstChild("CustomName").Text ~= text then
+				toolName.Visible = false
+				slot:FindFirstChild("CustomName").Text = text
+			end
+		end
+	end
+
+	local magichealth = player.PlayerGui:WaitForChild("ScreenGui"):WaitForChild("MagicHealth")
+	local UltLabel = magichealth:WaitForChild("TextLabel")
+	UltLabel.Visible = false
+	local UltLabel = UltLabel:Clone()
+	UltLabel.Visible = true
+	UltLabel.Name = "UltThing"
+	UltLabel.Parent = magichealth
+
+	local toolNameMap = {
+		["Flowing Water"] = "Tangerine",
+		["Lethal Whirlwind Stream"] = "Tangerine Grab-Combo",
+		["Hunter's Grasp"] = "Tangerine Grasp",
+	}
+
+	local function typeText(label, text, delay)
+		delay = delay or 0.05
+		local originalText = text
+		label.Text = ""
+		for i = 1, #originalText do
+			label.Text = string.sub(originalText, 1, i)
+			task.wait(delay)
+		end
+	end
+	local ultTexts = {
+		"Self-Destruction",
+		"Tangerine Dumbfounder"
+	}
+
+
+	local typedTools = {}
+
+	local function updateToolNames()
+		for _, slot in ipairs(hotbar:GetChildren()) do
+			if slot:FindFirstChild("Base") and slot.Base:FindFirstChild("ToolName") then
+				local toolNameText = slot.Base.ToolName.Text
+				local newName = toolNameMap[toolNameText]
+				if newName then
+					cloneToolName(slot.Base, newName)
+					if slot.Base:FindFirstChild("CustomName") and not typedTools[newName] then
+						typeText(slot.Base.CustomName, newName, 0.03)
+						typedTools[newName] = true
+
+
+					end
+				end
+			end
+		end
+	end
+
+	task.spawn(
+		function()
+			local currentUltIndex = 1
+
+			while true do
+				typeText(UltLabel, ultTexts[currentUltIndex], 0.05)
+				currentUltIndex = (currentUltIndex % #ultTexts) + 1
+
+				pcall(
+					function()
+					end
+				)
+
+				updateToolNames()
+				task.wait(10)
+			end
+		end
+	)
+
+	task.spawn(
+		function()
+			while task.wait(1) do
+				updateToolNames()
+			end
+		end
+	)
+
+------------- ANIMATIONS -------------
+
+--[[Base Move 1 - Flowing Water]]
+local OriginalAnimation = 12273188754
+local ReplacedAnimation = 13560306510
+
+local StartTime = 0 -- which time it starts like video
+local Speed = 4 -- animation speed
+local Duration = 12 -- when the animation stops
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. OriginalAnimation then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://" .. ReplacedAnimation
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+Anim:Play()
+Anim.TimePosition = StartTime
+Anim:AdjustSpeed(Speed)
+
+local Sound = 6678126154
+local Volume = 5
+local Speed = 1
+
+s= Instance.new("Sound")
+s.SoundId = "rbxassetid://" .. Sound
+s.Volume = Volume
+s.PlaybackSpeed = Speed
+s.Parent = Workspace
+s:Play()
+
+delay(Duration, function() 
+Anim:Stop()
+end)
+    end
+end
+
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+--[[Base Move 3 - Hunter's Grasp]]
+local OriginalAnimation = 12309835105
+local ReplacedAnimation = 14494902453
+
+local StartTime = 0 -- which time it starts like video
+local Speed = 1 -- animation speed
+local Duration = 7 -- when the animation stops
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. OriginalAnimation then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://" .. ReplacedAnimation
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+Anim:Play()
+Anim.TimePosition = StartTime
+Anim:AdjustSpeed(Speed)
+delay(Duration, function() 
+Anim:Stop()
+end)
+    end
+end
+
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
+
+--[[Awakening - Rampage]]
+local OriginalAnimation = 12342141464
+local ReplacedAnimation = 16746843881
+
+local StartTime = 0 -- which time it starts like video
+local Speed = 0.625 -- animation speed
+local Duration = 10 -- when the animation stops
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local function onAnimationPlayed(animationTrack)
+    if animationTrack.Animation.AnimationId == "rbxassetid://" .. OriginalAnimation then
+local p = game.Players.LocalPlayer
+local Humanoid = p.Character:WaitForChild("Humanoid")
+for _, animTrack in pairs(Humanoid:GetPlayingAnimationTracks()) do
+    animTrack:Stop()
+end
+local AnimAnim = Instance.new("Animation")
+AnimAnim.AnimationId = "rbxassetid://" .. ReplacedAnimation
+local Anim = Humanoid:LoadAnimation(AnimAnim)
+Anim:Play()
+Anim.TimePosition = StartTime
+Anim:AdjustSpeed(Speed)
+
+task.wait(4, function()
+game.Players.LocalPlayer:Kick("Tangerine Script doesnt even have ultimate loool get rekt")
+end)
+
+delay(Duration, function() 
+Anim:Stop()
+end)
+    end
+end
+
+humanoid.AnimationPlayed:Connect(onAnimationPlayed)
